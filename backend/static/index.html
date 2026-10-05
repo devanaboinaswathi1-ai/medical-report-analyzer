@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Items App</title>
+</head>
+<body>
+    <h2>Add Item</h2>
+
+    <input id="name" placeholder="Item name" />
+    <input id="description" placeholder="Item description" />
+    <button onclick="addItem()">Add</button>
+
+    <h2>Items List</h2>
+    <ul id="items"></ul>
+
+    <script>
+        const API_URL = "http://localhost:8000/items";
+
+        async function loadItems() {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+
+            const list = document.getElementById("items");
+            list.innerHTML = "";
+
+            data.forEach(item => {
+                const li = document.createElement("li");
+                li.innerHTML = `${item.name} - ${item.description}
+                <button onclick="deleteItem('${item.id}')">Delete</button>`;
+                list.appendChild(li);
+            });
+        }
+
+        async function addItem() {
+            const name = document.getElementById("name").value;
+            const description = document.getElementById("description").value;
+
+            await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, description })
+            });
+
+            loadItems();
+        }
+
+        async function deleteItem(id) {
+            await fetch(API_URL + "/" + id, { method: "DELETE" });
+            loadItems();
+        }
+
+        loadItems();
+    </script>
+</body>
+</html>

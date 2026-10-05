@@ -1,0 +1,29 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE
+.vscode/
+.idea/
+
+# Uploaded files
+uploads/
+*.pdf
+*.jpg
+*.png
+
+# Database
+*.db
+*.sqlite3
+
+# Logs
+*.log
